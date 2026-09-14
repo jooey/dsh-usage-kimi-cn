@@ -56,6 +56,8 @@ cd ~/.dsh/profiles
 npm install dsh-usage-kimi-cn --save --registry=https://registry.npmjs.org
 ```
 
+> ⚠️ **从旧版本（< 1.1.1）升级请注意**：旧版的 peerDependencies 会让 npm 自动把旧版 `@deepseek-ai/*` 核心包装进 profile 的 node_modules 根部，遮蔽宿主新版导致启动崩溃（`registerFileReceiptResolver` 报错）。1.1.1 起已修复（全部标记为 optional peer）。如已中招：删掉 profile 下 `node_modules/@deepseek-ai` 和 `package-lock.json`，再用 pnpm 重装；或改用下方 `dsh plugin --profile web add dsh-usage-kimi-cn` 一键安装（推荐）。
+
 然后在 `~/.dsh/profiles/web/cordis.patch.yml` 追加：
 
 ```yaml
@@ -125,6 +127,8 @@ KIMI_CODING_API_KEY: sk-kimi-your-key
 cd ~/.dsh/profiles
 npm install dsh-usage-kimi-cn --save --registry=https://registry.npmjs.org
 ```
+
+> ⚠️ **Upgrading from < 1.1.1?** Older versions declared peer dependencies that made npm auto-install outdated `@deepseek-ai/*` core packages into the profile's node_modules root, shadowing the newer host packages and crashing startup (`registerFileReceiptResolver` error). Fixed since 1.1.1 (all marked optional peers). If affected: delete `node_modules/@deepseek-ai` and `package-lock.json` in the profile, reinstall with pnpm — or use `dsh plugin --profile web add dsh-usage-kimi-cn` below instead (recommended).
 
 Then append to `~/.dsh/profiles/web/cordis.patch.yml`:
 
